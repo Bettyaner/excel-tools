@@ -1,37 +1,27 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-
+import {readFile} from "../service/readFile"
 defineProps<{ msg: string }>()
 
 const count = ref(0)
+const value = ref(null)
+
+async function onUpload(event){
+  const data = new FormData();
+  const file = event.target.files[0];
+  data.append("file", file);
+  const res = (await fetch("/api/excel/upload", { method: "POST", body: data })).json();
+  const result = await fetch(`/api/excel/read?fileName=${(await res).fileName}`);
+  console.log(result)
+
+}
 </script>
 
 <template>
-  <h1>{{ msg }}</h1>
-
-  <div class="card">
-    <button type="button" @click="count++">count is {{ count }}</button>
-    <p>
-      Edit
-      <code>components/HelloWorld.vue</code> to test HMR
-    </p>
-  </div>
-
-  <p>
-    Check out
-    <a href="https://vuejs.org/guide/quick-start.html#local" target="_blank"
-      >create-vue</a
-    >, the official Vue + Vite starter
-  </p>
-  <p>
-    Learn more about IDE Support for Vue in the
-    <a
-      href="https://vuejs.org/guide/scaling-up/tooling.html#ide-support"
-      target="_blank"
-      >Vue Docs Scaling up Guide</a
-    >.
-  </p>
-  <p class="read-the-docs">Click on the Vite and Vue logos to learn more</p>
+  <label>
+    <span>请上传</span>
+    <input id="input" type="file" placeholder="请选择一个excel文件" @change="onUpload" v-bind="value"/>
+  </label>
 </template>
 
 <style scoped>

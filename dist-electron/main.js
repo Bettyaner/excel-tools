@@ -1,5 +1,6 @@
-import { app, BrowserWindow } from "electron";
-import { join } from "path";
+"use strict";
+const { app, BrowserWindow } = require("electron");
+const { join } = require("path");
 process.env["ELECTRON_DISABLE_SECURITY_WARNINGS"] = "true";
 const createWindow = () => {
   const win = new BrowserWindow({

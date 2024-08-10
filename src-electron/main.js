@@ -1,6 +1,6 @@
 // src-electron/main.js
-import { app, BrowserWindow } from 'electron'
-import { join } from 'path'
+const { app, BrowserWindow } = require('electron')
+const { join } = require('path')
 
 // 屏蔽安全警告
 // ectron Security Warning (Insecure Content-Security-Policy)
@@ -21,7 +21,8 @@ const createWindow = () => {
         win.webContents.openDevTools()
     }else {
         win.loadFile(join(__dirname, '../dist/index.html'))
-    }
+    };
+
 }
 
 // Electron 会在初始化后并准备
